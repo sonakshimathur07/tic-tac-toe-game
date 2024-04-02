@@ -5,26 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
     <link rel="stylesheet" href="sytle.css"/>
-    <scrit src="app.js"></scrit>
+    <script src="game.js"></script>
 </head>
 <body>
     <main>
         <div class="container">
             <h1>Tic Tac Toe</h1>
             <div class="game">
-            <button onclick="box"  class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-
+                <button onclick="cellClick(0, 0)" class="box box00"></button>
+                <button onclick="cellClick(0, 1)" class="box box01"></button>
+                <button onclick="cellClick(0, 2)" class="box box02"></button>
+                <button onclick="cellClick(1, 0)" class="box box10"></button>
+                <button onclick="cellClick(1, 1)" class="box box11"></button>
+                <button onclick="cellClick(1, 2)" class="box box12"></button>
+                <button onclick="cellClick(2, 0)" class="box box20"></button>
+                <button onclick="cellClick(2, 1)" class="box box21"></button>
+                <button onclick="cellClick(2, 2)" class="box box22"></button>
             </div>
         </div>
-        <button id="reset-btn">Reset Game</button></button>
+        <button onclick="resetGame()" id="reset-btn">Reset Game</button></button>
     </main>
    
 </body>
