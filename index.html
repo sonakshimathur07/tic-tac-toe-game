@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe</title>
+    <title>Tic-tac-toe</title>
     <link rel="stylesheet" href="sytle.css"/>
-    <script src="game.js"></script>
 </head>
-<body>
-    <main>
-        <div class="container">
-            <h1>Tic Tac Toe</h1>
-            <div class="game">
-                <button onclick="cellClick(0, 0)" class="box box00"></button>
-                <button onclick="cellClick(0, 1)" class="box box01"></button>
-                <button onclick="cellClick(0, 2)" class="box box02"></button>
-                <button onclick="cellClick(1, 0)" class="box box10"></button>
-                <button onclick="cellClick(1, 1)" class="box box11"></button>
-                <button onclick="cellClick(1, 2)" class="box box12"></button>
-                <button onclick="cellClick(2, 0)" class="box box20"></button>
-                <button onclick="cellClick(2, 1)" class="box box21"></button>
-                <button onclick="cellClick(2, 2)" class="box box22"></button>
-            </div>
-        </div>
-        <div id="result"></div>
-        <button onclick="resetGame()" id="reset-btn">Reset Game</button>
-    </main>
-   
+<body>   
+  <div class="msg-container hide">
+    <p id="msg">Winner</p>
+    <button id="new-btn">New Game</button>
+  </div>
+  <h1>TiC-TAc-TOe</h1>
+  <div class="container">
+    <div class="game">
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+    </div>
+  </div>
+  <button id="reset-btn">Reset Game</button>
 </body>
+<script src="game.js"></script>
 </html>

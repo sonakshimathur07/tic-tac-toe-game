@@ -1,115 +1,71 @@
-// Player details
-const PLAYER_X = 'X'
-const PLAYER_O = 'O'
-let currentPlayer = PLAYER_X
+let boxes = document.querySelectorAll(".box");
+let resetBTn = document.querySelector("#reset-btn");
+let newgameBtn = document.querySelector('#new-btn');
+let msgContainer = document.querySelector('.msg-container');
+let msg = document.querySelector("#msg");
 
-// Initialize game board
-let gameBoard = [
-    ['', '', ''],
-    ['', '', ''],
-    ['', '', '']
-]
+let turnO = true; //player O starts
 
-// Reset game board
-function resetGame() {
-    gameBoard = [
-        ['', '', ''],
-        ['', '', ''],
-        ['', '', '']
-    ]
-    currentPlayer = PLAYER_X
-    displayValue()
-}
+const winPatterns = [    
+    [0, 1, 2],
+    [0, 3, 6],
+    [0, 4, 8],
+    [1, 4, 7],
+    [2, 5, 8],
+    [2, 4, 6],
+    [3, 4, 5],
+    [6, 7, 8],
+];
 
-// Display cell value
-function displayValue () {
-    for (let i=0; i<3; i++) {
-        for (let j=0; j<3; j++) {
-            document.querySelector(`.box${i}${j}`).innerHTML = gameBoard[i][j]
+boxes.forEach((box) => {
+    box.addEventListener("click", () => {
+        if (turnO) {  // Player O
+            box.innerText = "O";
+            turnO = false;
+        } else {       // Player X
+            box.innerText = "X";
+            turnO = true;
+        }
+        box.disabled = true;
+
+        checkWinner();
+    });
+});
+
+const resetGame = () => {
+    turnO = true;
+    enableBoxes();
+    msgContainer.classList.add("hide");
+};
+
+const disableBoxes = () => {
+    boxes.forEach(box => box.disabled = true);
+};
+
+const enableBoxes = () => {
+    boxes.forEach(box => {
+        box.disabled = false;
+        box.innerText = "";
+    });
+};
+
+const showWinner = (winner) => {
+    msg.innerText = `Congratulations, the winner is ${winner}`;
+    msgContainer.classList.remove("hide");
+    disableBoxes();
+};
+
+const checkWinner = () => {
+    for (let pattern of winPatterns) {
+        let pos1Val = boxes[pattern[0]].innerText;
+        let pos2Val = boxes[pattern[1]].innerText;
+        let pos3Val = boxes[pattern[2]].innerText;
+
+        if (pos1Val !== "" && pos1Val === pos2Val && pos2Val === pos3Val) {
+            showWinner(pos1Val);
         }
     }
-}
+};
 
-// handle current player
-function handleCurrentPlayer () {
-    if (currentPlayer === PLAYER_X) {
-        return currentPlayer = PLAYER_O
-    } 
-    return currentPlayer = PLAYER_X
-}
-
-function displayResult(result) {
-    document.getElementById('result').innerHTML = result
-}
-
-// function to cell click
-async function cellClick(x, y) {
-    if (gameBoard[x][y] === "") {
-        gameBoard[x][y] = currentPlayer
-        await displayValue()
-        handleCurrentPlayer()
-        let winner = checkWinner()
-        if (winner !== '' && winner !== null) {
-            if (winner === 'draw') {
-              displayResult("It's a draw!");
-            } else {
-              displayResult(`Player ${winner} wins!`);
-            }
-            resetGame();
-            return;
-          }
-    } else {
-        alert("not allowed")
-    }
-}
-
-// Winning cases
-function checkWinner () {
-    // check for row win
-    for (let i=0; i<3; i++) {
-        if (gameBoard[i][0] === gameBoard[i][1] && 
-            gameBoard[i][1] === gameBoard[i][2] &&
-            gameBoard[i][0] !== ""
-        ) {
-            return gameBoard[i][0]
-        }
-    }
-
-    // check for column win
-    for (let j=0; j<3; j++) {
-        if (gameBoard[0][j] === gameBoard[1][j] && 
-            gameBoard[1][j] === gameBoard[2][j] && 
-            gameBoard[0][j] !== ""
-            ) {
-            return gameBoard[0][j]
-        }
-        
-    }
-
-    // check for diagonal win
-    if (((gameBoard[0][0] === gameBoard[1][1] && gameBoard[1][1] === gameBoard[2][2]) ||
-        (gameBoard[0][2] === gameBoard[1][1] && gameBoard[1][1] === gameBoard[2][0])) && 
-        gameBoard[0][0] !== ''
-    ) {
-        return gameBoard[1][1]
-    }
-
-    // check for draw
-    let draw = true
-    for (let i=0; i<3; i++) {
-        for (let j=0; j<3; j++) {
-            if (gameBoard[i][j] === "") {
-                draw = false;
-                break;
-            }
-        }
-    }
-
-    if (draw) {
-        return 'draw'
-    }
-
-    return null
-}
-
-
+newgameBtn.addEventListener("click", resetGame);
+resetBTn.addEventListener("click", resetGame);
